@@ -11,20 +11,6 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object Label1: TLabel
-    Left = 180
-    Top = 27
-    Width = 38
-    Height = 15
-    Caption = 'dirPath'
-  end
-  object SpeedButton1: TSpeedButton
-    Left = 562
-    Top = 53
-    Width = 23
-    Height = 22
-    OnClick = SpeedButton1Click
-  end
   object ListBox1: TListBox
     Left = 0
     Top = 0
@@ -37,35 +23,61 @@ object Form1: TForm1
     ExplicitWidth = 157
     ExplicitHeight = 440
   end
-  object Edit1: TEdit
-    Left = 224
-    Top = 24
-    Width = 377
-    Height = 23
+  object Panel1: TPanel
+    Left = 161
+    Top = 0
+    Width = 463
+    Height = 441
+    Align = alClient
     TabOrder = 1
-    Text = 'C:\Users\yamat\Downloads'
-  end
-  object Button3: TButton
-    Left = 248
-    Top = 104
-    Width = 75
-    Height = 25
-    Caption = 'execute'
-    Default = True
-    TabOrder = 2
-    OnClick = Button3Click
-  end
-  object ComboBox1: TComboBox
-    Left = 248
-    Top = 203
-    Width = 145
-    Height = 23
-    ItemIndex = 0
-    TabOrder = 3
-    Text = '.mp4'
-    Items.Strings = (
-      '.mp4'
-      '.wmv')
+    ExplicitLeft = 224
+    ExplicitTop = 216
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object Label1: TLabel
+      Left = 6
+      Top = 50
+      Width = 38
+      Height = 15
+      Caption = 'dirPath'
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 391
+      Top = 92
+      Width = 23
+      Height = 22
+      OnClick = SpeedButton1Click
+    end
+    object Button3: TButton
+      Left = 78
+      Top = 139
+      Width = 75
+      Height = 25
+      Caption = 'execute'
+      Default = True
+      TabOrder = 0
+      OnClick = Button3Click
+    end
+    object Edit1: TEdit
+      Left = 50
+      Top = 47
+      Width = 377
+      Height = 23
+      TabOrder = 1
+      Text = 'C:\Users\yamat\Downloads'
+    end
+    object ComboBox1: TComboBox
+      Left = 78
+      Top = 210
+      Width = 145
+      Height = 23
+      ItemIndex = 0
+      TabOrder = 2
+      Text = '.mp4'
+      Items.Strings = (
+        '.mp4'
+        '.wmv')
+    end
   end
   object OpenDialog1: TOpenDialog
     Left = 472
