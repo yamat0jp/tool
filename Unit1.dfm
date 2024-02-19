@@ -18,61 +18,57 @@ object Form1: TForm1
     Height = 15
     Caption = 'dirPath'
   end
+  object SpeedButton1: TSpeedButton
+    Left = 562
+    Top = 53
+    Width = 23
+    Height = 22
+    OnClick = SpeedButton1Click
+  end
   object ListBox1: TListBox
     Left = 0
     Top = 0
     Width = 161
     Height = 441
     Align = alLeft
+    Anchors = [akLeft, akTop, akRight, akBottom]
     ItemHeight = 15
     TabOrder = 0
+    ExplicitWidth = 157
     ExplicitHeight = 440
-  end
-  object Button1: TButton
-    Left = 441
-    Top = 104
-    Width = 75
-    Height = 25
-    Caption = 'ReName'
-    TabOrder = 1
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 441
-    Top = 152
-    Width = 75
-    Height = 25
-    Caption = 'makeList'
-    TabOrder = 2
-    OnClick = Button2Click
   end
   object Edit1: TEdit
     Left = 224
     Top = 24
     Width = 377
     Height = 23
-    TabOrder = 3
+    TabOrder = 1
+    Text = 'C:\Users\yamat\Downloads'
   end
   object Button3: TButton
     Left = 248
     Top = 104
     Width = 75
     Height = 25
-    Caption = 'getfiles'
+    Caption = 'execute'
     Default = True
-    TabOrder = 4
+    TabOrder = 2
     OnClick = Button3Click
   end
   object ComboBox1: TComboBox
     Left = 248
-    Top = 232
+    Top = 203
     Width = 145
     Height = 23
     ItemIndex = 0
-    TabOrder = 5
+    TabOrder = 3
     Text = '.mp4'
     Items.Strings = (
       '.mp4'
       '.wmv')
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 472
+    Top = 224
   end
 end

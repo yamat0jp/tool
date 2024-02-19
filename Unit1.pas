@@ -5,20 +5,19 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DdeMan, Vcl.Buttons;
 
 type
   TForm1 = class(TForm)
     ListBox1: TListBox;
-    Button1: TButton;
-    Button2: TButton;
     Edit1: TEdit;
     Button3: TButton;
     ComboBox1: TComboBox;
     Label1: TLabel;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    SpeedButton1: TSpeedButton;
+    OpenDialog1: TOpenDialog;
     procedure Button3Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private êÈåæ }
   public
@@ -32,54 +31,42 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  s: string;
-begin
-  for var i := 0 to ListBox1.Count - 1 do
-  begin
-    if i < 10 then
-      s := '0' + i.ToString
-    else
-      s := i.ToString;
-    ReNameFile(Edit1.Text + '\' + ListBox1.Items[i], Edit1.Text + '\' + s +
-      ComboBox1.Text);
-  end;
-  if ListBox1.Count > 0 then
-    Button3Click(Sender);
-end;
-
-procedure TForm1.Button2Click(Sender: TObject);
-var
-  list: TStringList;
-begin
-  list := TStringList.Create;
-  try
-    for var name in ListBox1.Items do
-    begin
-      list.Add('file ' + name);
-      list.SaveToFile(Edit1.Text + '\video-list.txt');
-    end;
-  finally
-    list.Free;
-  end;
-  if ListBox1.Count > 0 then
-    Showmessage('çÏê¨äÆóπ.');
-end;
+uses ShellAPI;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var
   num: integer;
   rec: TSearchRec;
+  s: string;
 begin
   ListBox1.Items.Clear;
   num := FindFirst(Edit1.Text + '\*' + ComboBox1.Text, faNormal, rec);
   while num = 0 do
   begin
-    ListBox1.Items.Add(rec.Name);
+    ListBox1.Items.Add(Format('''%s''', [rec.Name]));
     num := FindNext(rec);
   end;
   FindClose(rec);
+  var
+  list := TStringList.Create;
+  try
+    for var name in ListBox1.Items do
+      list.Add('file ' + name);
+    list.SaveToFile(Edit1.Text + '\video-list.txt');
+  finally
+    list.Free;
+  end;
+  if ListBox1.Count > 0 then
+  begin
+    s := ' -safe 0 -f concat -i video-list.txt -c copy output' + ComboBox1.Text;
+    ShellExecute(Handle, 'open', 'ffmpeg', PChar(s), '', SW_SHOWNORMAL);
+  end;
+end;
+
+procedure TForm1.SpeedButton1Click(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+    Edit1.Text := ExtractFileDir(OpenDialog1.FileName);
 end;
 
 end.
