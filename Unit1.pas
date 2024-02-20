@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DdeMan, Vcl.Buttons,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TForm1 = class(TForm)
@@ -18,6 +18,7 @@ type
     SpeedButton1: TSpeedButton;
     OpenDialog1: TOpenDialog;
     Panel1: TPanel;
+    StatusBar1: TStatusBar;
     procedure Button3Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
   private
@@ -45,7 +46,8 @@ begin
   num := FindFirst(Edit1.Text + '\*' + ComboBox1.Text, faNormal, rec);
   while num = 0 do
   begin
-    ListBox1.Items.Add(Format('''%s''', [rec.Name]));
+    if rec.Name <> 'output' + ComboBox1.Text then
+      ListBox1.Items.Add(Format('''%s''', [rec.Name]));
     num := FindNext(rec);
   end;
   FindClose(rec);
@@ -60,8 +62,9 @@ begin
   end;
   if ListBox1.Count > 0 then
   begin
+    SetCurrentDir(Edit1.Text);
     s := ' -safe 0 -f concat -i video-list.txt -c copy output' + ComboBox1.Text;
-    ShellExecute(Handle, 'open', 'ffmpeg', PChar(s), '', SW_SHOWNORMAL);
+    ShellExecute(Handle, 'open', 'ffmpeg', PChar(s), nil, SW_SHOWNORMAL);
   end;
 end;
 
